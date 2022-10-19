@@ -104,10 +104,6 @@ body {
     display: none;
 }
 
-.nouvelleRow:hover>.cmd {
-    display: inline-block;
-}
-
 .nouvelleRow:hover {
     background-color: rgb(195, 255, 255);
 }

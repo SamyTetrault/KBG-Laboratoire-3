@@ -41,7 +41,7 @@ function PUT(nouvelles, successCallBack, errorCallBack) {
         url: apiBaseURL + "/" + nouvelles.Id,
         type: 'PUT',
         contentType: 'application/json',
-        data: JSON.stringify(bookmark),
+        data: JSON.stringify(nouvelles),
         success: () => { successCallBack() },
         error: function (jqXHR) { errorCallBack(jqXHR.status) }
     });

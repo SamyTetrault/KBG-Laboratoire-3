@@ -9,7 +9,7 @@ module.exports =
             this.ImageUrl = imageUrl !== undefined ? imageUrl : "";
             this.Date = date !== undefined ? date : "";
 
-            this.setKey("Titre");
+            this.setKey("Title");
             this.addValidator('Category', 'string');
             this.addValidator('Title', 'string');
             this.addValidator('Text', 'string');

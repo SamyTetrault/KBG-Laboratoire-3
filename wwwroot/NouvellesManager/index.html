@@ -55,8 +55,8 @@
                     <label for="category_input">Catégorie</label>
                     <input type="text" id="category_input" class="form-control" required invalidMessage="Obligatoire">
 
-                    <label for="texte_input">Texte</label>
-                    <input type="text" id="texte_input" class="form-control" required invalidMessage="Obligatoire">
+                    <label for="text_input">Texte</label>
+                    <input type="text" id="text_input" class="form-control" required invalidMessage="Obligatoire">
 
                     <label for="date_input">Date</label>
                     <input type="text" id="date_input" class="form-control" required invalidMessage="Obligatoire">
@@ -75,6 +75,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="js/customValidation.js"></script>
     <script src="js/api.js"></script>
+    <script src="js/utilities.js"></script>
     <script defer>
         const periodicRefreshPeriod = 10;
         let holdCheckETag = false;
@@ -89,14 +90,12 @@
         init_UI();
         HEAD(checkETag, error);
         setInterval(() => { HEAD(checkETag, error) }, periodicRefreshPeriod * 1000);
-
         function checkETag(ETag) {
             if (!holdCheckETag && ETag != currentETag) {
                 currentETag = ETag;
                 getNouvellesList();
             }
         }
-
         function getNouvellesList() {
             function prepareQueryString() {
                 let queryString = "?sort=Category&sort=Title";
@@ -124,11 +123,11 @@
         }
         function refreshNouvellesList(nouvelles, ETag) {
             function insertIntoNouvelleList(nouvelle) { 
-                console.log(nouvelle);
                 let catElem = $(`<div class="catDiv ellipsis">${nouvelle.Category}</div>`);
                 let titElem = $(`<div  class="titDiv">${nouvelle.Title}</div>`);
                 let imaElem = $(`<div  class="ellipsis"><img src='${nouvelle.ImageUrl}'/></div>`);
                 let texElem = $(`<div  class="textDiv ellipsis">${nouvelle.Text}</div>`);
+                let dateElem = $(`<div  class="dateDiv">${secondsToDateString(nouvelle.Date)}</div>`);
                 let editCmd = $(`<div class="cmd editCmd fa fa-pencil-square" nouvelleid="${nouvelle.Id}" title="Editer ${nouvelle.Title}" data-toggle="tooltip">`);
                 let deleteCmd = $(`<div class="cmd deleteCmd fa fa-window-close" nouvelleid="${nouvelle.Id}" title="Effacer ${nouvelle.Title}" data-toggle="tooltip">`);
                 let nouvelleRow = $("<div class='nouvelleLayout nouvelleRow'>");
@@ -136,6 +135,7 @@
                 nouvelleRow.append(imaElem);
                 nouvelleRow.append(titElem);
                 nouvelleRow.append(texElem);
+                nouvelleRow.append(dateElem);
                 nouvelleRow.append(editCmd);
                 nouvelleRow.append(deleteCmd);
                 $("#nouvellesList").append(nouvelleRow);
@@ -218,14 +218,20 @@
         function resetNouvelleForm() {
             $("#Id_input").val("0");
             $("#title_input").val("");
-            $("#texte_input").val("");
+            $("#text_input").val("");
             $("#url_input").val("");
             $("#category_input").val("");
             $("#date_input").val("");
         }
-        function NouvelleFromForm() {
+        function nouvelleFromForm() {
             if ($("#nouvelleForm")[0].checkValidity()) {
-                let nouvelle = { Id: parseInt($("#Id_input").val()), Title: $("#title_input").val(),Texte: $("#texte_input").val(), ImageUrl: $("#url_input").val(), Category: $("#category_input").val(), Date: $("#date_input").val() };
+                let nouvelle = { 
+                    Id: parseInt($("#Id_input").val()), 
+                    Title: $("#title_input").val(),
+                    Text: $("#text_input").val(), 
+                    ImageUrl: $("#url_input").val(), 
+                    Category: $("#category_input").val(), 
+                    Date: $("#date_input").val() };
                 return nouvelle;
             } else {
                 $("#nouvelleForm")[0].reportValidity()
@@ -235,7 +241,7 @@
         function nouvelleToForm(nouvelle) {
             $("#Id_input").val(nouvelle.Id);
             $("#title_input").val(nouvelle.Title);
-            $("#texte_input").val(nouvelle.Text);
+            $("#text_input").val(nouvelle.Text);
             $("#url_input").val(nouvelle.ImageUrl);
             $("#category_input").val(nouvelle.Category);
             $("#date_input").val(nouvelle.Date);
