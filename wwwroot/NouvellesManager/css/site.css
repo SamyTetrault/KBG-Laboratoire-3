@@ -44,6 +44,7 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%;
+    height: 1000px;
     padding: 10px;
 }
 
@@ -71,33 +72,38 @@ body {
 
 .nouvelleLayout {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    width: 100%;
+    height: fit-content;
     padding: 10px 0;
     gap: 20px;
     border-radius: 8px;
-    padding-left: 5px;
 }
 
 .catDiv {
     text-align: center;
-    width: 100px;  
+    width: 100px;
 }
 
 .nouvelleLayout .textDiv {
-    width: 50%;
+    text-align: justify;
+    width: 80%;
 }
 
 .titDiv {
-    width: 300px;
-    text-align: left;
+    width: 60%;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
     overflow: unset;
 }
 
 .nouvelleLayout img {
     object-fit: cover;
-    width: 100px;
-    height: 100px;
+    width: 100%;
+    height: 100%
 }
 
 .nouvelleRow>.cmd {
@@ -106,6 +112,10 @@ body {
 
 .nouvelleRow:hover {
     background-color: rgb(195, 255, 255);
+}
+
+.nouvelleRow:hover > .cmd {
+    display: block;
 }
 
 .cmd {
